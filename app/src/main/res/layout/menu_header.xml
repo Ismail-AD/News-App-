@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:paddingStart="15dp"
+    android:background="@color/cardview_light_background">
+
+    <ImageView
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_115sdp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/news_header_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/my_header"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/monserratmedium"
+        android:layout_marginBottom="10dp"
+        android:text="@string/header_caption"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:id="@+id/my_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/my_header"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/gobold_regular"
+        android:text="Taza Khabar"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp" />
+
+
+
+</RelativeLayout>

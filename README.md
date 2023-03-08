@@ -3,6 +3,6 @@ Taza Khabar is a news app that uses MVVM, Hilt, Retrofit, News API, and Recycler
 
 # Screenshots
 
-![ProjectImage1](https://user-images.githubusercontent.com/99780212/223610250-45c6c3fc-498a-4163-8a5c-33f63a6f5d5c.jpg)  ![Projectimage2](https://user-images.githubusercontent.com/99780212/223610256-a8073f34-4f77-4d94-93aa-159216a50f36.jpg)
-![ProjectImage3](https://user-images.githubusercontent.com/99780212/223610259-30109cd4-d29f-4a51-8346-fbc8681c028b.jpg)  ![ProjectImage4](https://user-images.githubusercontent.com/99780212/223610262-e2986951-3424-40c8-a2ae-52469bbc1256.jpg) 
 
+![Projectimage2fixed](https://user-images.githubusercontent.com/99780212/223744574-c19061d4-1743-4792-9119-44dacfacedc7.jpg)
+![ProjectImage1fixed](https://user-images.githubusercontent.com/99780212/223744583-da1c7161-a9e2-4b85-b314-ea79e93cc635.jpg)

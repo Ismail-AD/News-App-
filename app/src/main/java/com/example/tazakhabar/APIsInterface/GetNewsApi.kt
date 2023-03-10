@@ -8,14 +8,14 @@ import retrofit2.http.Query
 interface GetNewsApi {
 
     @GET("top-headlines")
-    fun get_General_News(
+    suspend fun get_General_News(
         @Query("country") country: String,
         @Query("pageSize") pageSize: Int,
         @Query("apikey") apiKey: String,
     ): Call<TotalArticles>
 
     @GET("top-headlines")
-    fun get_Category_Wise(
+   suspend fun get_Category_Wise(
         @Query("country") country: String,
         @Query("category") category: String,
         @Query("pageSize") pageSize: Int,
@@ -23,7 +23,7 @@ interface GetNewsApi {
     ): Call<TotalArticles>
 
     @GET("search")
-   fun get_News_with_keywords(
+  suspend fun get_News_with_keywords(
         @Query("q") q: String,
         @Query("apikey") apiKey: String,
     ): Call<TotalArticles>

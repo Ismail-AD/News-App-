@@ -1,15 +1,14 @@
 package com.example.tazakhabar.ViewModel
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.tazakhabar.APIsInterface.GetNewsApi
 import com.example.tazakhabar.Utils.Constants.API_KEY
-import com.example.tazakhabar.View.MainActivity
 import com.example.tazakhabar.modelClasses.Article
 import com.example.tazakhabar.modelClasses.TotalArticles
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +27,9 @@ class viewModel @Inject constructor(val getNewsApi: GetNewsApi) : ViewModel() {
     fun argumentSetter(country: String, pageSize: Int) {
         this.country = country
         this.pageSize = pageSize
-        getNewsFromApi(country, pageSize, "")
+        viewModelScope.launch {
+            getNewsFromApi(country, pageSize, "")
+        }
     }
 
     fun getNewsList(): MutableLiveData<List<Article>?> {
@@ -38,24 +39,30 @@ class viewModel @Inject constructor(val getNewsApi: GetNewsApi) : ViewModel() {
     fun searchNews(searchText: String) {
         receviedNews.clear()
         changeAbleList.value = null
-        val callInstance: Call<TotalArticles> =
+        viewModelScope.launch {
             getNewsApi.get_News_with_keywords(searchText, API_KEY)
-        callInstance.enqueue(object : Callback<TotalArticles> {
-            override fun onResponse(call: Call<TotalArticles>, response: Response<TotalArticles>) {
-                receviedNews.addAll(response.body()!!.articles)
-                changeAbleList.value = receviedNews
-            }
-            override fun onFailure(call: Call<TotalArticles>, t: Throwable) {
-                changeAbleList.value = null
-            }
-        })
-    }
-    fun getCategory(category: String) {
-        this.category = category
-        getNewsFromApi(country, pageSize, this.category)
+                .enqueue(object : Callback<TotalArticles> {
+                    override fun onResponse(
+                        call: Call<TotalArticles>,
+                        response: Response<TotalArticles>,
+                    ) {
+                        receviedNews.addAll(response.body()!!.articles)
+                        changeAbleList.value = receviedNews
+                    }
+                    override fun onFailure(call: Call<TotalArticles>, t: Throwable) {
+                        changeAbleList.value = null
+                    }
+                })
+        }
     }
 
-    private fun getNewsFromApi(country: String, pageSize: Int, category: String) {
+    fun getCategory(category: String) {
+        viewModelScope.launch {
+            getNewsFromApi(country, pageSize, category)
+        }
+    }
+
+    private suspend fun getNewsFromApi(country: String, pageSize: Int, category: String) {
         receviedNews.clear()
         changeAbleList.value = null
         val callObject: Call<TotalArticles>
@@ -71,6 +78,7 @@ class viewModel @Inject constructor(val getNewsApi: GetNewsApi) : ViewModel() {
                 receviedNews.addAll(response.body()!!.articles)
                 changeAbleList.value = receviedNews
             }
+
             override fun onFailure(call: Call<TotalArticles>, t: Throwable) {
                 changeAbleList.value =
                     null //suppose if we create another request and that request failed

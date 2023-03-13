@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
             //Returning true indicates that the item selection event has been handled successfully
             return@setNavigationItemSelectedListener true
         }
+        viewModelObject.errorMessage.observe(this, Observer {
+            if (it != "" || it != null) {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -109,12 +114,14 @@ class MainActivity : AppCompatActivity() {
                 viewModelObject.searchNews(query!!)
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
         return true
     }
+
     fun countryWiseSetter(countryTag: String, pageSize: Int, nameOfCountry: String) {
         binding.recyclerView.visibility = View.GONE
         binding.ShimLayout.visibility = View.VISIBLE
@@ -142,12 +149,14 @@ class MainActivity : AppCompatActivity() {
             categoryList.add(dataObject)
         }
     }
+
     fun onCategoryClicked(categoryList: categoryList) {
         binding.recyclerView.visibility = View.GONE
         binding.ShimLayout.visibility = View.VISIBLE
         binding.ShimLayout.startShimmer()
         viewModelObject.getCategory(categoryList.categoryTag)
     }
+
     private fun setToolbarWithDrawer() {
         setSupportActionBar(binding.myToolbar)
         toggle = ActionBarDrawerToggle(
